@@ -46,6 +46,7 @@ for (let i = 0; i < buttons.length; i++) {
                     moving += input.value[i];
                     numbers.push(moving);
                     moving = "";
+                    console.log(numbers);
 
                 } else {
                     moving += input.value[i];
@@ -62,7 +63,8 @@ for (let i = 0; i < buttons.length; i++) {
 
                 if (numbers[i] === "*") {
                     temp = parseFloat(numbers[i - 1]) * parseFloat(numbers[i + 1]);
-                    numbers.splice(i - 1, i + 1, temp);
+                    numbers.splice(i - 1, i + 2, temp);
+                    console.log(numbers);
                 };
 
             };
@@ -73,7 +75,8 @@ for (let i = 0; i < buttons.length; i++) {
 
                     if (numbers[i] === "/") {
                         temp = parseFloat(numbers[i - 1]) / parseFloat(numbers[i + 1]);
-                        numbers.splice(i - 1, i + 1, temp);
+                        numbers.splice(i - 1, i + 2, temp);
+                        console.log(numbers);
                     };
 
                 };
@@ -84,7 +87,8 @@ for (let i = 0; i < buttons.length; i++) {
 
                 if (numbers[i] === "+") {
                     temp = parseFloat(numbers[i - 1]) + parseFloat(numbers[i + 1]);
-                    numbers.splice(i - 1, i + 1, temp);
+                    numbers.splice(i - 1, i + 2, temp);
+                    console.log(numbers);
                 };
 
             };
@@ -95,7 +99,8 @@ for (let i = 0; i < buttons.length; i++) {
 
                 if (numbers[i] === "-") {
                         temp = parseFloat(numbers[i - 1]) - parseFloat(numbers[i + 1]);
-                        numbers.splice(i - 1, i + 1, temp);
+                        numbers.splice(i - 1, i + 2, temp);
+                        console.log(numbers);
                     };
 
                 };
