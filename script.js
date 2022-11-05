@@ -6,30 +6,47 @@ let moving = "";
 
 let numbers = [];
 let temp;
+//
 
-/*
+function onlyLettersAndNumbers(str) {
+    return /^[0-9]*$/.test(str);
+  }
 
-
-
-
-*/
+//
 
 for (let i = 0; i < buttons.length; i++) {
     
     if (buttons[i].value === "=") {
         buttons[i].addEventListener('click', () => {
 
-            // This for loop is to check through every index of value, if anything is NaN except arithmetic operations!
+            let inputStatus = "okay";
 
-            /*
+            // This for loop is to check through every index of value, if anything is NaN except arithmetic operations!
 
             for (let i = 0; i < input.value.length; i++) {
 
+                if (input.value[i] === "-" || input.value[i] === "+" || input.value[i] === "/" || input.value[i] === "*") {
+
+                    console.log("Ovo je " + input.value[i]);
+
+                } else {
+
+                    let y = onlyLettersAndNumbers(input.value[i]);
+                    console.log(y);
+
+                    if (y == false) {
+                        inputStatus = "not okay";
+                        input.value = "Error. No Letters!"
+                        setTimeout(() => {
+                            input.value = "";
+                        }, 1000)
+                        break;
+                    }
+
+                }
             }
 
-            WORK IN PROGRESS
-
-            */
+            if (inputStatus === "okay") {
 
             // This loop is for dividing numbers and arithmetic operations into an array
 
@@ -108,6 +125,7 @@ for (let i = 0; i < buttons.length; i++) {
             input.value = numbers[0];
             numbers = [];
                 
+            }
         
             });
         } else {  
