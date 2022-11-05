@@ -6,6 +6,8 @@ let moving = "";
 
 let numbers = [];
 let temp;
+let pointStatus = "off";
+let checker = "not checked";
 //
 
 function onlyLettersAndNumbers(str) {
@@ -25,7 +27,7 @@ for (let i = 0; i < buttons.length; i++) {
 
             for (let i = 0; i < input.value.length; i++) {
 
-                if (input.value[i] === "-" || input.value[i] === "+" || input.value[i] === "/" || input.value[i] === "*") {
+                if (input.value[i] === "-" || input.value[i] === "+" || input.value[i] === "/" || input.value[i] === "*" || input.value[i] === ".") {
 
                     console.log("Ovo je " + input.value[i]);
 
@@ -46,88 +48,125 @@ for (let i = 0; i < buttons.length; i++) {
                 }
             }
 
-            if (inputStatus === "okay") {
-
             // This loop is for dividing numbers and arithmetic operations into an array
 
-            for (let i = 0; i < input.value.length; i++) {
+            if (inputStatus === "okay") {
 
-                if (input.value[i] === "-" || input.value[i] === "+" || input.value[i] === "/" || input.value[i] === "*") {
+                for (let i = 0; i < input.value.length; i++) {
 
-                    numbers.push(moving);
-                    numbers.push(input.value[i]);
-                    moving = "";
+                    if (input.value[i] === "-" || input.value[i] === "+" || input.value[i] === "/" || input.value[i] === "*") {
 
-                } else if (i === input.value.length - 1) {
+                        let assurance = "ready";
 
-                    moving += input.value[i];
-                    numbers.push(moving);
-                    moving = "";
-                    console.log(numbers);
+                        if (checker === "not checked") {
 
-                } else {
-                    moving += input.value[i];
-                }
+                            checker = "checked";
+                            if (input.value[0] === "+" || input.value[0] === "-") {
+                                assurance = "not ready"
+                                moving += input.value[i];
+                            }
+
+                        } 
+                        
+                        if (checker === "checked" && assurance === "ready") {
+
+                            numbers.push(moving);
+                            numbers.push(input.value[i]);
+                            moving = "";
+
+                        }
+
+                    } else if (i === input.value.length - 1) {
+
+                        moving += input.value[i];
+                        numbers.push(moving);
+                        moving = "";
+                        console.log(numbers);
+
+                    } else {
+                        moving += input.value[i];
+                    }
+                    
+                };
+
+                // These loops down do the same thing just different arithmetic operation, reason behind dividing it's because of order of operations (rule: PEMDAS)
+
+
+                // First One: Multiplication
+
+                for (let i = 0; i < numbers.length; i++) {
+
+                    if (numbers[i] === "*") {
+                        temp = parseFloat(numbers[i - 1]) * parseFloat(numbers[i + 1]);
+                        numbers.splice(i - 1, 3, temp.toString());
+                        console.log(numbers);
+                        i = 0;
+                    };
+
+                };
+
+                // Second One: Division
+
+                for (let i = 0; i < numbers.length; i++) {
+
+                        if (numbers[i] === "/") {
+                            temp = parseFloat(numbers[i - 1]) / parseFloat(numbers[i + 1]);
+                            numbers.splice(i - 1, 3, temp.toString());
+                            console.log(numbers);
+                            i = 0;
+                        };
+
+                    };
+
+                // Third One: Addition
+
+                for (let i = 0; i < numbers.length; i++) {
+
+                    if (numbers[i] === "+") {
+                        temp = parseFloat(numbers[i - 1]) + parseFloat(numbers[i + 1]);
+                        numbers.splice(i - 1, 3, temp.toString());
+                        console.log(numbers);
+                        i = 0;
+                    };
+
+                };
+
+                // Last One: Subtraction
+
+                for (let i = 0; i < numbers.length; i++) {
+
+                    if (numbers[i] === "-") {
+                            temp = parseFloat(numbers[i - 1]) - parseFloat(numbers[i + 1]);
+                            numbers.splice(i - 1, 3, temp.toString());
+                            console.log(numbers);
+                            i = 0;
+                        };
+
+                    };
                 
-            };
-
-            // These loops down do the same thing just different arithmetic operation, reason behind dividing it's because of order of operations (rule: PEMDAS)
-
-
-            // First One: Multiplication
-
-            for (let i = 0; i < numbers.length; i++) {
-
-                if (numbers[i] === "*") {
-                    temp = parseFloat(numbers[i - 1]) * parseFloat(numbers[i + 1]);
-                    numbers.splice(i - 1, i + 2, temp);
-                    console.log(numbers);
-                };
-
-            };
-
-            // Second One: Division
-
-            for (let i = 0; i < numbers.length; i++) {
-
-                    if (numbers[i] === "/") {
-                        temp = parseFloat(numbers[i - 1]) / parseFloat(numbers[i + 1]);
-                        numbers.splice(i - 1, i + 2, temp);
-                        console.log(numbers);
-                    };
-
-                };
-
-            // Third One: Addition
-
-            for (let i = 0; i < numbers.length; i++) {
-
-                if (numbers[i] === "+") {
-                    temp = parseFloat(numbers[i - 1]) + parseFloat(numbers[i + 1]);
-                    numbers.splice(i - 1, i + 2, temp);
-                    console.log(numbers);
-                };
-
-            };
-
-            // Last One: Subtraction
-
-            for (let i = 0; i < numbers.length; i++) {
-
-                if (numbers[i] === "-") {
-                        temp = parseFloat(numbers[i - 1]) - parseFloat(numbers[i + 1]);
-                        numbers.splice(i - 1, i + 2, temp);
-                        console.log(numbers);
-                    };
-
-                };
-
-            input.value = numbers[0];
-            numbers = [];
+                checker = "not checked";
+                console.log(numbers);
+                input.value = numbers[0];
+                numbers = [];
                 
             }
         
             });
+        } 
+        else if (buttons[i].value === ".") {
+            
+            buttons[i].addEventListener('click', () => {
+
+                let j = input.value.length - 1;
+                if (input.value[j] === "+" || input.value[j] === "-" || input.value[j] === "*" || input.value[j] === "/" || input.value.length === 0) {
+                    console.log("Can't do the operation!")
+                } else {
+                    input.value += buttons[i].value;
+                    operator = "on"; // Reason: this will stop from adding any math operation if decimal has 
+                }
+
+            })
+
         } else {  
         buttons[i].addEventListener('click', () => {
 
